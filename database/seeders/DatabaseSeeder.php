@@ -13,6 +13,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
+        $goods = \App\Models\Good::factory(10)->create();
+        $categories = \App\Models\Category::factory(10)->create();
+
+        foreach ($goods as $good) {
+            $category_ids = $categories->random(random_int(2,10))->pluck('id');
+            $good->categories()->attach($category_ids);
+        }
     }
 }
